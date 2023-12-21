@@ -1,16 +1,19 @@
 package dev.patika.furrypawcare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "pets")
-@Data
+
+@Getter
+@Setter
+@ToString
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pet {
@@ -23,15 +26,31 @@ public class Pet {
     private String breed;
     private String colour;
     private String gender;
-    @Column(name = "birth_date")
     private LocalDate birthDate;
+
+    @ToString.Exclude
     @ManyToOne
-    @JoinColumn(name = "owner_id")
+    @JsonIgnore
     private Owner owner;
+
+    @ToString.Exclude
     @OneToMany(mappedBy = "pet", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<Vaccine> vaccines;
+
+    @ToString.Exclude
     @OneToMany(mappedBy = "pet", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<Appointment> appointments;
 
+//    public interface GetPetWithoutOwner {
+//        Long getId();
+//        String getName();
+//        String getSpecies();
+//        String getBreed();
+//        String getColour();
+//        String getGender();
+//        LocalDate getBirthDate();
+//    }
 
 }

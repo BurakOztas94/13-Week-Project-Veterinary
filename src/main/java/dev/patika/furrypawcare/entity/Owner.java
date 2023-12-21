@@ -22,8 +22,8 @@ public class Owner {
     private String email;
     private String address;
     private String city ;
+    
     @OneToMany(mappedBy = "owner",cascade = CascadeType.REMOVE)
     private List<Pet> pets;
-
 
 }

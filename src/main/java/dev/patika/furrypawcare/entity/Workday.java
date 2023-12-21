@@ -2,7 +2,10 @@ package dev.patika.furrypawcare.entity;
 
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
@@ -15,10 +18,10 @@ public class Workday {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private LocalDate date;
+    private LocalDate workday;
 
+    @ToString.Exclude
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "vet_id")
     private Vet vet;
 
 }

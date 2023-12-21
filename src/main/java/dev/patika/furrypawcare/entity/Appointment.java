@@ -1,9 +1,13 @@
 package dev.patika.furrypawcare.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import java.time.LocalDateTime;
 
@@ -16,14 +20,15 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name="start_date_time")
+
     private LocalDateTime startDateTime;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "pet_id")
     private Pet pet;
 
+    @ToString.Exclude
     @ManyToOne
-    @JoinColumn(name = "vet_id")
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JsonIgnore
     private Vet vet;
 }
