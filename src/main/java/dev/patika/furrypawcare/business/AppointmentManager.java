@@ -11,6 +11,7 @@ import dev.patika.furrypawcare.repository.AppointmentRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +37,8 @@ public class AppointmentManager {
                 map (getById (id),AppointmentResponse.class);
     }
 
-    public List<AppointmentResponse> getAllAppointmentResponsesByVetIdAndPetId (Long vetId, Long petId){
-        return appointmentRepository.findByVetIdAndPetId (vetId, petId)
+    public List<AppointmentResponse> getAllAppointmentResponsesByVetIdAndPetId ( Long petId,Long vetId){
+        return appointmentRepository.findByPetIdAndVetId ( petId,vetId)
                 .stream ()
                 .map (appointment -> modelMapperManager.forResponse ().map (appointment, AppointmentResponse.class))
                 .toList ();
@@ -46,16 +47,16 @@ public class AppointmentManager {
 
     public AppointmentResponse save (Long vetId, Long petId, AppointmentSaveRequest appointmentSaveRequest){
 
-        // TODO: gerekli appointment kontrollerini yap
+
         workdayManager.getByVetIdAndWorkday (
                 vetId,
-                appointmentSaveRequest.getAppointmentDateTime ().toLocalDate ()
+                appointmentSaveRequest.getStartDateTime ().toLocalDate ()
         ).orElseThrow (() -> new RuntimeException ("Vet is not available at this date"));
 
 
         Optional<Appointment> checkIfVetIsAvailableAtThisHour = appointmentRepository.findByVetIdAndStartDateTime (
                 vetId,
-                appointmentSaveRequest.getAppointmentDateTime ()
+                appointmentSaveRequest.getStartDateTime ()
         );
 
         if ( checkIfVetIsAvailableAtThisHour.isPresent () )
@@ -95,7 +96,7 @@ public class AppointmentManager {
 
 
 
-    public  void delete (Long id ){
+    public  void delete (@PathVariable Long id ){
         appointmentRepository.delete (getById (id));
     }
 }

@@ -15,7 +15,7 @@ public class AppointmentUpdateRequest {
     private Long id;
 
 
-    private LocalDateTime appointmentDateTime;
+    private LocalDateTime startDateTime;
 
     private Long vetId;
     private Long petId;

@@ -23,7 +23,7 @@ public class Appointment {
 
     private LocalDateTime startDateTime;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     private Pet pet;
 
     @ToString.Exclude

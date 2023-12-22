@@ -12,8 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 
 public class AppointmentSaveRequest {
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime appointmentDateTime;
-    private Long vetId;
-    private Long petId;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "UTC")
+    private LocalDateTime startDateTime;
+
 }

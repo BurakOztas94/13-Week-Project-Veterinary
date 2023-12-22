@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AppointmentResponse {
     private Long id;
-    private LocalDateTime appointmentDateTime;
+    private LocalDateTime startDateTime;
     private VetWithoutAnythingResponse vet;
     private PetWithoutAnythingResponse pet;
 }
